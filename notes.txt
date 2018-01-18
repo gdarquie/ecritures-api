@@ -1,0 +1,16 @@
+3 janvier 2017
+
+Etat d'avancement :
+
+TexteController
+
+- Récupération d'un ou de plusieurs texte en GET
+
+Reste à faire:
+
+- Ajout d'un texte via POST
+
+
+
+
+Système d'authentication à créer

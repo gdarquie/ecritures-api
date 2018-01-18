@@ -1,0 +1,15 @@
+#index:
+#    path: /
+#    defaults: { _controller: 'App\Controller\DefaultController::index' }
+
+app_accueil:
+    path: /
+    controller: App\Controller\DefaultController:home
+
+app_projets:
+    path: /projets/
+    controller: App\Controller\ProjetController:projets
+
+app_projet:
+    path: /projet/:id
+    controller: App\Controller\ProjetController:projet
