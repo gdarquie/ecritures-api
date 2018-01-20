@@ -15,6 +15,7 @@ class ProjetController extends AbstractController
 
     /**
      * @Route("/projets", name="projets")
+     * @Method("GET")
      */
     public function projets()
     {
@@ -28,6 +29,7 @@ class ProjetController extends AbstractController
 
     /**
      * @Route("/projet={id}", name="projet")
+     * @Method("GET")
      */
     public function projet($id)
     {
@@ -41,6 +43,7 @@ class ProjetController extends AbstractController
 
     /**
      * @Route("/projet={id}/textes", name="projetTextes")
+     * @Method("GET")
      */
     public function projetTextes($id)
     {
@@ -54,6 +57,7 @@ class ProjetController extends AbstractController
 
     /**
      * @Route("/projet={id}/evenements", name="projetEvenements")
+     * @Method("GET")
      */
     public function projetEvenements($id){
 
@@ -67,6 +71,7 @@ class ProjetController extends AbstractController
 
     /**
      * @Route("/projet={id}/personnages", name="projetPersonnages")
+     * @Method("GET")
      */
     public function projetPersonnages($id){
 
@@ -89,10 +94,10 @@ class ProjetController extends AbstractController
         $projet = new Projet();
         $projet->setTitre($data['titre']);
         $projet->setDescription($data['description']);
-
         $em = $this->getDoctrine()->getManager();
         $em->persist($projet);
         $em->flush();
+
 
         return new Response("Save done!!");
     }
