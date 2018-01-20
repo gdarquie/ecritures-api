@@ -2,10 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Concept\Projet;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 class ProjetController extends AbstractController
 {
@@ -16,14 +19,28 @@ class ProjetController extends AbstractController
     public function projets()
     {
         $em = $this->getDoctrine()->getManager();
-        $query = $em->createQuery('SELECT p.id, p.titre, p.description  FROM App\Entity\Concept\Projet p');
+        $query = $em->createQuery('SELECT p.id, p.titre, p.description  FROM App\Entity\Concept\Projet p ORDER BY p.id DESC');
+        $textes = $query->getResult();
+
+        return new JsonResponse($textes);
+    }
+
+
+    /**
+     * @Route("/projet={id}", name="projet")
+     */
+    public function projet($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery('SELECT p.id, p.titre, p.description  FROM App\Entity\Concept\Projet p WHERE p.id = :id');
+        $query->setParameter('id', $id);
         $textes = $query->getResult();
 
         return new JsonResponse($textes);
     }
 
     /**
-     * @Route("/projet/{id}/textes", name="projetTextes")
+     * @Route("/projet={id}/textes", name="projetTextes")
      */
     public function projetTextes($id)
     {
@@ -36,7 +53,7 @@ class ProjetController extends AbstractController
     }
 
     /**
-     * @Route("/projet/{id}/evenements", name="projetEvenements")
+     * @Route("/projet={id}/evenements", name="projetEvenements")
      */
     public function projetEvenements($id){
 
@@ -49,7 +66,7 @@ class ProjetController extends AbstractController
     }
 
     /**
-     * @Route("/projet/{id}/personnages", name="projetPersonnages")
+     * @Route("/projet={id}/personnages", name="projetPersonnages")
      */
     public function projetPersonnages($id){
 
@@ -61,4 +78,23 @@ class ProjetController extends AbstractController
         return new JsonResponse($personnages);
     }
 
+    /**
+     * @Route("/projet")
+     * @Method("POST")
+     */
+    public function newProjetAction(Request $request)
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $projet = new Projet();
+        $projet->setTitre($data['titre']);
+        $projet->setDescription($data['description']);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($projet);
+        $em->flush();
+
+        return new Response("Save done!!");
+    }
+    //post
 }

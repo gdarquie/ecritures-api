@@ -3,6 +3,7 @@
     "license": "proprietary",
     "require": {
         "php": "^7.0.8",
+        "csa/guzzle-bundle": "^2.2",
         "sensiolabs/security-checker": "^4.1",
         "symfony/asset": "^3.4",
         "symfony/console": "^3.4",
